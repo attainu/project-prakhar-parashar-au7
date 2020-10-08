@@ -1,7 +1,6 @@
 const initialState = {
-    user : "",
+    user : {},
     isAuthenticated : false,
-    token : ""
 }
 
 
@@ -14,7 +13,7 @@ const userReducer = (state=initialState, action) => {
         case("CREATE_USER_SESSION"):
         console.log(action)
              return {
-                 ...state, user : action.payload.user, isAuthenticated : true, token : action.payload.token
+                 ...state, user : action.payload.user, isAuthenticated : true
              }
 
         default : 

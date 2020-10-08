@@ -7,60 +7,21 @@ import Users from '../Models/User.js'
 
 const controllers = {
 
-    addPosts : (req, res) => {
-          
-        const token = req.body.token
-        jwt.verify(token, 'secret', (err, user) => {
-            if(err) res.json({
-                status : 404,
-                message : "Session Expired",
-                error : err
-            })
-           
-        Users.find({userName :  user.userName}, (err, user) => {
-            if(err){
-                res.send(err)
-            }
-            req.body.User = user._id
-
-            console.log(req.body.User)
-
-            const date = new Date()
-            req.body.DateTime = date
-            
-            Posts.create(req.body).then((post, err) => {
-                if (err) {
-                    res.json({
-                        status : 400,
-                        message : "Mongodb Cannot create new post",
-                        error : err
-                    })
-            }
-            res.json({
-                status : 200,
-                message : "Post created Successfully",
-                post : post
-            })
-        })
-        })
-            
-        })
-
-      
-},
-
-
     
-
     viewPosts : (req, res) => {
-         
-        Posts.find((err, Posts) => {
-            if(err) {
-                res.send(err)
+         console.log("here")
+         Posts.find().populate('user').exec(function(err, posts) {
+            // console.log(posts)
+             res.send(posts)
+         })
+        // Posts.find((err, Posts) => {
+        //     if(err) {
+        //         res.send(err)
 
-            }
-            res.send(Posts)
-        })
+        //     }
+            
+        //    
+        // })
 
 
     },
@@ -91,15 +52,21 @@ const controllers = {
         
         const date = new Date()
         req.body.DateTime = date
-
+        console.log(req.body)
         Posts.create(req.body).then((post, err) => {
             if (err) {
+                console.log(err)
                 res.json({
                     status : 400,
                     message : "Mongodb Cannot create new post",
                     error : err
                 })
         }
+        console.log(post)
+        Posts.findById(post._id).populate('user').exec(function(err, post) {
+            if(err) return err
+            console.log(post.user)
+        })
         res.json({
             status : 200,
             message : "Post created Successfully",

@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 import {getAllPostsAction} from '../redux/Actions/postActions' 
 import CreatePost from '../Components/CreatePost'
 import {Image,} from 'cloudinary-react'
-import PhotosUploader from '../Components/UploadPhotos';
+import PhotosUploader from '../Components/photoUploader';
+import './styles/Home.css'
+
 
 
 class Postpage extends Component {
@@ -29,20 +31,31 @@ class Postpage extends Component {
     render() {
 
         
-       console.log(this.props)
+      
+      console.log(this.props.Posts[0])
+      const Posts = this.props.Posts[0]
+      console.log(Posts)
         return (
             <div>
-                <CreatePost/>
-                <PhotosUploader/>
-                <Image cloudName="prakhar-parashar" publicId="xyk243h8x2qoc6mnxnln.jpg" width="300" crop="scale" />
-              
+                <nav>
+                    <button id="profileButton">
+                        <div>
+                            <Image publicId={this.props.currentUser.profilePic} width="40" height="40" radius="100" cloudName="prakhar-parashar"/>
+                            <p>{this.props.currentUser.userName}</p>
+                        </div>
+                    </button>
+                </nav>
+                <div id="createPost" >               
+                <CreatePost id="createPost"/>
+                </div>           
                 { 
 
-                    this.props.Posts !== ""
+                    this.props.Posts.length !== 0
+                        
                         ?
-                        this.props.Posts.map(post =>
-
-                            <Post key={post._id} post={post} Likes = {post.Likes} Comments = {post.Comments}/>)
+                        Posts.map(post =>
+                            
+                             <Post key={post._id} post={post} />)
                         :
                         null }
             </div>
@@ -55,7 +68,8 @@ class Postpage extends Component {
 
 const mapState = (state) => {
     return {
-        Posts: state.postReducer
+        Posts: state.postReducer,
+        currentUser : state.userReducer.user
     }
 }
 

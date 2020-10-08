@@ -1,6 +1,5 @@
 import axios from 'axios'
-//import history from '../../history'
-import {useHistory} from 'react-router-dom'
+
 
 
 export const  userInfoToDB = (userInfo) => {
@@ -13,7 +12,8 @@ export const  userInfoToDB = (userInfo) => {
         data: {
             email: userInfo.email,
             userName: userInfo.userName,
-            password: userInfo.password
+            password: userInfo.password,
+            profilePic : userInfo.registerPhotoId
         }
     })
         .then((response) => {
@@ -28,13 +28,17 @@ export const  userInfoToDB = (userInfo) => {
 }
 }
 
+
 const userRegistered = {
       type : "USER_REGISTERED"
 }
 
 
+
+
+
+
 export const userLoggingIn = (userInfo) => {
-    console.log("action")
     return async (dispatch) => {
         return axios({
             method : 'post',
@@ -45,10 +49,9 @@ export const userLoggingIn = (userInfo) => {
             }
         }).then((response) => {
             console.log(response.data.message)
-             localStorage.setItem("token",response.data.token)
-             axios.defaults.headers.common['Authorization'] = localStorage.getItem("token")
-           
-             dispatch(userLoggingActionCreator(response.data.user, response.data.token))
+             localStorage.setItem("token", response.data.token)
+             axios.defaults.headers.common = {'Authorization': `bearer ${response.data.token}`}           
+             dispatch(userLoggingActionCreator(response.data.user))
              
             
         })
@@ -56,12 +59,11 @@ export const userLoggingIn = (userInfo) => {
 }
 
 
-export const userLoggingActionCreator = (user, token) => {
+export const userLoggingActionCreator = (user) => {
     return {
         type : "CREATE_USER_SESSION",
         payload : {
-        user,
-        token
+        user
     }
 }
 }

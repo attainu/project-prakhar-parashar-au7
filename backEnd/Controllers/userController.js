@@ -4,12 +4,15 @@ import bcrypt from 'bcrypt'
 
 import jwt from 'jsonwebtoken'
 
+import ProfileDetails from '../Models/Profile.js'
+
 const controllers = {
     
     userRegistered : (req, res) => {
         const saltRounds = 10
         bcrypt.hash(req.body.password, saltRounds, function(err, hashedPassword){
         req.body.password = hashedPassword
+        console.log(req.body)
         User.create(req.body)
             .then((user, err) => {
                 if (err) {
@@ -53,8 +56,7 @@ const controllers = {
                    res.json({message :"password don't match"})
                }
                else if (result == true){
-                  console.log("loggingIn")
-                  const token = jwt.sign({userName :  req.body.userName}, 'secret', (err, token) => {
+                  const token = jwt.sign({_id : user._id, userName : user.userName, profilePic : user.profilePic}, 'secret', (err, token) => {
                       User.findByIdAndUpdate(user._id, {token : token})
                       .then(res.json({
                           message: "Login Successful",
@@ -76,6 +78,11 @@ const controllers = {
 
          
        })
+      },
+
+      recievedProfileDetails : (req, res) => {
+               console.log(req.body)
+               ProfileDetails.create(req.body)
       }
 }
 

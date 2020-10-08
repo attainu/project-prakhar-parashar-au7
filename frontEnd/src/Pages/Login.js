@@ -1,22 +1,38 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {userLoggingIn} from '../redux/Actions/userActions'
 import LoginSignUpForm from '../Components/LoginSignUpForm'
-import { useHistory } from 'react-router-dom';
+import { useHistory , Redirect} from 'react-router-dom';
+import {useSelector} from 'react-redux'
+
 
 
 const Login = (props) => {
+
+
     const history = useHistory()
+
     const userLoggingIn = (userInfo) => {
-         props.userLoggingIn(userInfo)         
-         history.push('/Home')
-     }
+    
+         props.userLoggingIn(userInfo)
         
+         
+       
+        
+         
+     }
+     if(props.isAuthenticated) {
+        console.log(props)
+        history.push('/home')
+    }
         
         return (
+            
+            
+           
   <LoginSignUpForm formType="Login" userLoggingIn = {userLoggingIn}/>
 
-           
+  
 
 
         )
@@ -29,7 +45,7 @@ const dispatchMapper = {
 
 const stateMapper = (state) => {
     return {
-        userName : state.userReducer,
+        user : state.userReducer.user,
         isAuthenticated : state.userReducer.isAuthenticated
     }
 }

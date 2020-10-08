@@ -6,11 +6,11 @@ export const postCreateRequestAction =  (post) => {
 
     const {data} =   await Axios({
         method : "post",
-        url : 'https://fast-mountain-25827.herokuapp.com/createPost',
+        url : 'createPost',
         data : {
-            Title : post ,
-            Description : "tocheckandtest",
-            Author : "Mee"
+            postText : post.postText,
+            assetId : post.assetId,
+            user : post.userId
         }
     })
     dispatch(getAllPostsAction())
@@ -25,9 +25,8 @@ export const getAllPostsAction = () => {
     return async (dispatch) => {
         const {data} = await Axios({
             method : "get",
-            url : "https://fast-mountain-25827.herokuapp.com/viewPosts",
+            url : "viewPosts",
         })
-
         return dispatch(storePostsInRedux(data))
 
     }

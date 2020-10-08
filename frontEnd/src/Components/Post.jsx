@@ -1,80 +1,45 @@
 import React from 'react'
 import { postLiked, sendComment } from '../redux/Actions/postActions'
 import {connect} from 'react-redux'
+import {Image} from 'cloudinary-react'
+import {useSelector} from 'react-redux'
+import ProfileButton from './profileButton'
 
-class Post extends React.Component {
-    constructor(props){
-        super(props);
-        console.log(this.props)
-        this.state = {
-            id : "",
-            comments : ["heyyyy"],
-            presentComment : ""
-        }
-    }
-      
-    componentDidMount(){
-         this.setState({id:this.props.post._id})
-    }
-
-    handleLike = () => {
-        console.log("heyy")
-           this.props.postLiked(this.state.id)
-           this.setState({Likes : this.props.post.Likes})
-    }
-
-    handleComment = () => {
-        console.log("eh")
-             this.props.sendComment(this.state.id, this.state.presentComment)
-    }
-
-    handleCommentText = (e) => {
-         this.setState({presentComment : e.target.value})
-    }
+const Post = (props) =>  {
     
-   style = {
-       marginLeft : "200px",
-       marginTop : "-100px"
-   }
+         
+   
+     
+   
 
-   commentStyle = {
-       marginLeft : "600px"
-   }
-
-   postStyle = {
+   const postStyle = {
        padding : "50px",
-       border : "1px dotted grey"
+       marginLeft : "300px",
+       boxShadow: "0 0 15px 1px rgba(0, 0, 0, 0.4)",
+       width : "630px"
    }
 
 
 
-   render() {
-       const {post} = this.props
-
+   
+       const {post} = props
        console.log(post)
-       
        return(
-        <div style= {this.postStyle}>
-        <h2>{post.Title}</h2><br></br><p>{post.Description}</p>
-        <p>{this.props.Likes} Likes so far</p>
-        <button onClick={this.handleLike}>Like</button>
-        <br></br><p>Created By : {post.Author}</p><br></br>
+        <div style= {postStyle}>
+         <div style={{width : "100px"}}>
+         <ProfileButton user={post.user} /> 
+         </div>
+        <p>{post.postText}</p>
+        <Image cloudName = "prakhar-parashar" publicId = {post.assetId}/>
+
+        
+        
         <p>Created On : {String(post.DateTime).slice(0,10)}</p>
         <p>Created At : {String(post.DateTime).slice(11,19)}</p>
 
         
         
-        <div style={this.style}>
         
-        
-        
-            <textarea onChange = {this.handleCommentText}></textarea>
-            <button onClick = {this.handleComment}>Comment</button>
-            <p ><small>Please click twice if doesn't work at once</small></p>
-            
-            
-
-        </div>
         
     </div>
        )
@@ -82,7 +47,7 @@ class Post extends React.Component {
 
 
 
-}
+
 
 
 const passDispatchMethodsToProps = {

@@ -19,6 +19,12 @@ const userSchema = new schema ({
     password : {
         type : String||Number,
         required : true
+    },
+    profilePic :{
+        type : String
+    },
+    token : {
+        type : String
     }
 })
 

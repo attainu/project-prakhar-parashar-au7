@@ -28,8 +28,22 @@ button {
 
 #fields {
     position: fixed;
-    top: 40%;
-    left:15%
+    top: 30%;
+    left:15%;
+    position: fixed;
+    
 
     
+}
+
+#photoUploader{
+    position : fixed;
+    left: 45%;
+}
+
+#profilePic{
+    top:10%;
+    left:40%;
+    position: fixed;
+    border-radius: 50%;
 }

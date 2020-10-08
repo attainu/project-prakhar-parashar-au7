@@ -4,23 +4,20 @@ const schema = mongoose.Schema
 
 const postSchema = new schema ({
     
-    Title : {
-        type : String,
-        unique : true,
-        required : true
+    
+    postText : {
+        type: String
     },
 
-    Description : {
-        type : String,
-        required : true
-    },
-    Author : {
+    assetId : {
         type : String
     },
+    
     DateTime: {
         type : Date
     },
-    User : {
+
+    user : {
         type : schema.Types.ObjectId,
         ref : 'User'
     },
