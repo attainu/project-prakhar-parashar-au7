@@ -1,16 +1,17 @@
 import React from 'react';
+import {useSelector} from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import BasicInfo from './../../Components/BasicInfo';
-import WorkAndEducation from './../../Components/WorkAndEducation'
-import OtherDetails from './../../Components/OtherDetails'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import BasicInfo from '../Components/BasicInfo'
+import WorkAndEducation from '../Components/WorkAndEducation'
+import OtherDetails from '../Components/OtherDetails'
 import axios from 'axios'
-import './editProfile.css'
+import './styles/editProfile.css'
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +48,8 @@ export default function HorizontalLabelPositionBelowStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
-
+  const userId = useSelector(state => state.userReducer.user._id)
+  const history = useHistory()
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     
@@ -65,16 +67,19 @@ export default function HorizontalLabelPositionBelowStepper() {
 
   const submitForm = () => {
     isLoading = true
+    history.push("/home")
+    
     axios({
       method : 'post',
       url : '/ProfileDetails',
       data : {
+        userId : userId,
         basicInfoValues : basicInfoValues,
         workAndEducationValues : workAndEducationValues,
-        OtherDetailsValues : OtherDetailsValues
+        otherDetailsValues : OtherDetailsValues
       }
     }).then((response) => {
-      isLoading = false
+     
     })
   }
  

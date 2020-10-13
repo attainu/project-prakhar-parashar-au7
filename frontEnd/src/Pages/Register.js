@@ -1,18 +1,38 @@
 import React from 'react'
 import LoginSignUpForm from '../Components/LoginSignUpForm';
 import { useDispatch} from 'react-redux'
-import {userInfoToDB} from '../redux/Actions/userActions'
-import {connect} from 'react-redux'
-
+import axios from 'axios'
+import { useHistory } from 'react-router-dom';
+import {userLoggingIn} from '../redux/Actions/userActions'
 
 
 
 const Register = (props) => {
   
+   const history = useHistory()
 
-   // const dispatch = useDispatch()
+   const dispatch = useDispatch()
 
-    const userInfoToDb = (userInfo, dispatch) => { props.userInfoToDB(userInfo)}
+
+
+    const userInfoToDb = (userInfo) => {
+        axios({
+            method: 'post',
+            url: 'userRegistration',
+    
+            data: {
+                email: userInfo.email,
+                userName: userInfo.userName,
+                password: userInfo.password,
+                profilePic : userInfo.registerPhotoId
+            }
+        })
+            .then((response) => {
+                alert(response.data.message)
+                dispatch(userLoggingIn(userInfo))
+                history.push("/profileDetails")
+            })
+    }
 
         return (
 
@@ -22,9 +42,5 @@ const Register = (props) => {
         )
     }
 
-const dispatchMapper = {
- userInfoToDB : userInfoToDB 
-}
 
-
-export default connect(null, dispatchMapper)(Register)
+export default Register

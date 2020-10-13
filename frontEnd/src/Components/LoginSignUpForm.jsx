@@ -29,7 +29,7 @@ const LoginSignUpForm = (props) => {
                         <div id="profilePic">
                             {registerPhotoId == "" ?
                                  
-                                     <div id="photoUploader">
+                                     <div id="photoUploaders">
                                 <PhotosUploader photoInfo={(assetId) => setRegisterPhotoId(assetId)} /> 
                                 </div> :
                                 <Image cloudName="prakhar-parashar" publicId={registerPhotoId} width="70" height="70" id="profilePic" >
@@ -56,19 +56,22 @@ const LoginSignUpForm = (props) => {
                         <br></br><br></br><br></br>
                         {(props.formType === "Login") &&
                             <>
-                                <Link to="/ForgotPassword">Forgot Password?</Link>
-                                <br></br><br></br>
-                                <Link to="/Register">New user? Register here</Link>
+                                
+                                <Link to="/register">New user? Register here</Link>
                             </>
                         }
-                        {
-                            (props.formType === "Register") &&
-
-                            <Link to="/">Already Registered? Login Here</Link>
-                        }
+                        
                     </div>
+                    
                 </div>
+               
             </form>
+            {
+                            (props.formType === "Register") &&
+                            <div style={{marginTop : "550px"}}>
+                            <Link to="/">Already Registered? Login Here</Link>
+                            </div>
+                        }
         </div>
 
     )

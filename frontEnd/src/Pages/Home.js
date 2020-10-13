@@ -2,10 +2,14 @@ import React, { Component } from 'react'
 import Post from '../Components/Post'
 import { connect } from 'react-redux'
 import {getAllPostsAction} from '../redux/Actions/postActions' 
-import CreatePost from '../Components/CreatePost'
-import {Image,} from 'cloudinary-react'
+import {getLoggedInUserInfo} from '../redux/Actions/userActions'
+import {Image} from 'cloudinary-react'
 import PhotosUploader from '../Components/photoUploader';
 import './styles/Home.css'
+import { Link } from 'react-router-dom'
+import FriendRequest from '../Components/friendRequests'
+import Navbar from '../Components/Navbar'
+import SearchModal from '../Components/userSearchModal'
 
 
 
@@ -14,18 +18,28 @@ class Postpage extends Component {
     constructor() {
         super()
         this.state = {
-             imageAttr : "" 
+             imageAttr : "",
+             modalShow : false,
+             searchedUsers : []
         }
     }
 
     
+    toPost =() => {
+       this.props.getAllPostsAction()
+    }
+
 
     componentDidMount() {
         this.props.getAllPostsAction()
+        this.props.getLoggedInUserInfo(this.props.currentUser._id)
         console.log("mounted")
     }
   
-     
+     showUsers = (data) => {
+          this.setState({searchedUsers : data})
+          this.setState({modalShow : true})
+     }
    
 
     render() {
@@ -37,28 +51,30 @@ class Postpage extends Component {
       console.log(Posts)
         return (
             <div>
-                <nav>
-                    <button id="profileButton">
-                        <div>
-                            <Image publicId={this.props.currentUser.profilePic} width="40" height="40" radius="100" cloudName="prakhar-parashar"/>
-                            <p>{this.props.currentUser.userName}</p>
-                        </div>
-                    </button>
-                </nav>
-                <div id="createPost" >               
-                <CreatePost id="createPost"/>
-                </div>           
+                <Navbar currentUser = {this.props.currentUser} showUsers={this.showUsers}/>
+                
+
+                 <div style={{marginTop : "40px"}}>
+
+                 <SearchModal searchedUsers={this.state.searchedUsers}
+                 show={this.state.modalShow}
+                 onHide={() => this.setState({modalShow : false})}
+             />
+           
                 { 
 
                     this.props.Posts.length !== 0
                         
                         ?
-                        Posts.map(post =>
-                            
-                             <Post key={post._id} post={post} />)
+                        Posts.reverse().map(post =>
+                            <div style={{marginTop : "20px"}}>
+                             <Post key={post._id} post={post} toPost = {this.toPost}/>
+                             </div>)
                         :
                         null }
-            </div>
+                        </div>
+                        </div>
+        
         )
 
 
@@ -74,7 +90,8 @@ const mapState = (state) => {
 }
 
 const mapDispatch = {
-    getAllPostsAction : getAllPostsAction
+    getAllPostsAction : getAllPostsAction,
+    getLoggedInUserInfo : getLoggedInUserInfo
 }
 
 export default connect(mapState, mapDispatch)(Postpage)

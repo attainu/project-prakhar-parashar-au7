@@ -1,6 +1,7 @@
 #userName {
     display: inline;
     margin-top: 15px;
+    font-weight: 200;
 }
 #profilePic { 
         all: unset;

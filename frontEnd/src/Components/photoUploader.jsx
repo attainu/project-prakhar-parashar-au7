@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import request from 'superagent';
-//import {postBeingCreated} from '../redux/Actions/uploadedAssetActions'
 
 
 class PhotosUploader extends Component {
@@ -18,19 +17,7 @@ class PhotosUploader extends Component {
                 
                         
                         <form style={this.props.style}>
-                            {/* <div className="form_line">
-                                <label path="title">Title:</label>
-                                <div className="form_controls">
-                                    <input
-                                        type="text"
-                                        ref={titleEl =>
-                                            (this.titleEl = titleEl)
-                                        }
-                                        className="form-control"
-                                        placeholder="Title"
-                                    />
-                                </div>
-                            </div> */}
+                           
                             <div className="form_line">
                                 <div className="form_controls">
                                     <div className="upload_button_holder">

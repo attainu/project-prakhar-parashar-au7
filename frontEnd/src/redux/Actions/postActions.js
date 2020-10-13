@@ -27,6 +27,7 @@ export const getAllPostsAction = () => {
             method : "get",
             url : "viewPosts",
         })
+        console.log(data)
         return dispatch(storePostsInRedux(data))
 
     }

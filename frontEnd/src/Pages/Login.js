@@ -21,7 +21,7 @@ const Login = (props) => {
         
          
      }
-     if(props.isAuthenticated) {
+     if(localStorage.getItem("token")) {
         console.log(props)
         history.push('/home')
     }

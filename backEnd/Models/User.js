@@ -25,7 +25,13 @@ const userSchema = new schema ({
     },
     token : {
         type : String
-    }
+    },
+
+    sentRequest : [{}],
+
+    recievedRequest : [{}],
+
+    friends : [{}]
 })
 
 const User = mongoose.model('User', userSchema)

@@ -3,19 +3,25 @@ import mongoose from 'mongoose'
 const schema = mongoose.Schema
 
 const profileDetailsSchema = new schema ({
-    basicInfo : {
-        type : {}
+
+    userId : {
+        type : schema.Types.ObjectId,
+        ref : 'User'
     },
 
-    workAndEducation : {
-        type : {}
+    basicInfoValues : {
+        type : Object
     },
 
-    otherDetails : {
-        type : {}
+    workAndEducationValues : {
+        type : Object
+    },
+
+    otherDetailsValues : {
+        type : Object
     }
 })
 
-const ProfileDetails = mongoose.model('ProfileDetails', profileDetailsSchema)
+const Profile = mongoose.model('Profile', profileDetailsSchema)
 
-export  default ProfileDetails
+export  default Profile

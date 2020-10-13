@@ -94,7 +94,7 @@ const photoStyle = {
             Add Photo
             </button>
              :
-               <Image publicId={photoInfo} cloudName="prakhar-parashar" /> } 
+               <Image publicId={photoInfo} cloudName="prakhar-parashar" width="400" height="400"/> } 
          
          </div>
       

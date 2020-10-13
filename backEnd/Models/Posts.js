@@ -22,7 +22,7 @@ const postSchema = new schema ({
         ref : 'User'
     },
     
-    Comments : [],
+    Comments : [{}],
 
     Likes : {
         type: Number,

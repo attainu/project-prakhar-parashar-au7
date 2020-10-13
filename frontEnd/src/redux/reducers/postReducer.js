@@ -27,7 +27,7 @@ const postReducer = (state=initialState, action) => {
         const newPosts = action.payload
         
         
-         return [...state, newPosts]
+         return [ newPosts]
          
 
         case("LIKE_POST"):

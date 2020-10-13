@@ -42,10 +42,30 @@ Router.post('/createPost',  postControllers.createPost)
 // To view all posts
 Router.get('/viewPosts', passport.authenticate('jwt', { session: false }), postControllers.viewPosts)
 
-//To like a post 
-Router.post('/likePost/:id', postControllers.likePost)
+//To send profile Info 
+Router.get('/getProfile', userControllers.getProfile)
+
 
 //To comment on a post 
-Router.post('/commentOnPost/:id', postControllers.commentOnPost)
+Router.post('/comment', postControllers.commentOnPost)
+
+//To send a friend request
+Router.post('/friendRequest', userControllers.friendRequest)
+
+//To get LoggedIn userInfo
+Router.post('/loggedInUserInfo', userControllers.loggedInUserInfo)
+
+
+//To accept Reject request 
+Router.post('/requestHandle', userControllers.requestHandle)
+
+//To Like 
+Router.post('/liked', postControllers.postLiked)
+
+//To unlike
+Router.post('/unliked', postControllers.postUnliked)
+
+//search User
+Router.post('/searchUser', userControllers.searchUser)
 
 export default Router
